@@ -1,4 +1,4 @@
-import "./intro.css";
+import "./intro.scss";
 
 const Intro = () => {
   return (
@@ -20,7 +20,7 @@ const Intro = () => {
           </li>
         </ul>
       </div>
-      <div className="talk">LET'S TALK BUSINESS</div>
+      <div className="talk"><h1>LET'S TALK BUSINESS</h1></div>
       <a className="contact" href="#contact">
         Contact Us
       </a>

@@ -1,17 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
+import { Context } from "../../context/Context";
 import "./dashboard.css";
 
 const Dashboard = () => {
+  const { user, dispatch } = useContext(Context);
+  console.log(user.user.username);
+  const handleLogout = async () => {
+    dispatch({ type: "LOGOUT" });
+  };
   return (
     <div className="dashboard">
       <div className="top">
         <div className="left">
-          <h3> Welcome back <b>Peller!</b> </h3>
+          <h3>
+            {" "}
+            Welcome back {user.user.username}
+          </h3>
         </div>
         <div className="right">
-          <div className="icon">
-            {/* <i className="bi bi-people"></i> */}
-          </div>
+          <div className="icon">{/* <i className="bi bi-people"></i> */}</div>
           {/* <div className="referral">Referral Commission: $0:00</div> */}
         </div>
       </div>
@@ -40,7 +48,7 @@ const Dashboard = () => {
               <div className="icon">
                 <i className="bi bi-box-arrow-left"></i>
               </div>
-              <h5>Logout</h5>
+              <h5 onClick={handleLogout}>{user ? "Logout" : "Login"}</h5>
             </li>
           </ul>
         </div>
@@ -49,7 +57,7 @@ const Dashboard = () => {
           <div className="container">
             <div className="row">
               <div className="col-md-4 col">
-              <FontAwesomeIcon icon="fa-solid fa-wallet" />
+                <FontAwesomeIcon icon="fa-solid fa-wallet" />
                 <p>TOTAL WITHDRAWAL</p>
                 <FontAwesomeIcon icon="fa-solid fa-signal" />
                 <h4>$0:00</h4>

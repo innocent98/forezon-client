@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import "./app.scss";
 import Footer from "./component/footer/Footer";
 import Approach from "./pages/approach/Approach";
@@ -8,8 +13,12 @@ import Login from "./pages/login/Login";
 import Team from "./pages/team/Team";
 import Contact from "./pages/contact/Contact";
 import Dashboard from "./pages/dashboard/Dashboard";
+import { useContext } from "react";
+import { Context } from "./context/Context";
+import Admin from "./pages/admin/Admin";
 
 function App() {
+  const { user } = useContext(Context);
   return (
     <Router>
       <Switch>
@@ -23,13 +32,14 @@ function App() {
           </div>
         </Route>
         <Route path="/register">
-          <Register />
+          {user ? <Redirect to="/dashboard" /> : <Register />}
         </Route>
         <Route path="/login">
-          <Login />
+          {user  && user.user.isAdmin ? <Redirect to="/admin" />} : {user && !user.user.isAdmin && <Redirect to="/dashboard"/> : <Login />}
         </Route>
-        <Route path="/dashboard">
-          <Dashboard />
+        <Route path="/dashboard">{user ? <Dashboard /> : <Login />}</Route>
+        <Route path="/admin">
+          {user && user.user.isAdmin ? <Admin/> : <Login/>}
         </Route>
       </Switch>
     </Router>

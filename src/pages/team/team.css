@@ -9,6 +9,18 @@
   display: flex;
   justify-content: center;
 }
+@media screen and (max-width: 480px) {
+  .teamPic {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 768px) {
+  .teamPic {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 
 .teamPic {
   width: 100%;
