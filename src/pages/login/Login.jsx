@@ -1,16 +1,15 @@
 import { useContext, useRef, useState } from "react";
 import "./login.scss";
-import axios from "axios"
+import axios from "axios";
 import { Context } from "../../context/Context";
 
 const Login = () => {
-
   const usernameRef = useRef();
   const passwordRef = useRef();
   const { dispatch, isFetching } = useContext(Context);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError(false);
     dispatch({ type: "LOGIN_START" });
@@ -29,7 +28,7 @@ const Login = () => {
   return (
     <div className="login">
       <div className="container">
-        <form className="row g-3" onSubmit={handleSubmit}>
+        <form className="row g-3" onSubmit={handleLogin}>
           <div className="col-md-4">
             <input
               type="username"
@@ -47,7 +46,9 @@ const Login = () => {
             />
           </div>
           <div className="col-md-4">
-            <button className="btn btn-primary" type="submit">Login</button>
+            <button className="btn btn-primary" type="submit">
+              Login
+            </button>
           </div>
         </form>
         <div className="member">

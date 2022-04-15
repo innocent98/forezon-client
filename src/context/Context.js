@@ -3,6 +3,7 @@ import Reducer from "./Reducer";
 
 const INITIAL_STATE = {
   user: JSON.parse(localStorage.getItem("user")) || null,
+  accessToken: JSON.parse(localStorage.getItem("accessToken")) || null,
   isFetching: false,
   error: false,
 };
@@ -14,12 +15,14 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(state.user));
-  }, [state.user]);
+    localStorage.setItem("accessToken", JSON.stringify(state.accessToken));
+  }, [state.user, state.accessToken]);
 
   return (
     <Context.Provider
       value={{
         user: state.user,
+        accessToken: state.accessToken,
         isFetching: state.isFetching,
         error: state.error,
         dispatch,

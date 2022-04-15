@@ -16,6 +16,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import { useContext } from "react";
 import { Context } from "./context/Context";
 import Admin from "./pages/admin/Admin";
+import EditUser from "./pages/editUser/EditUser";
 
 function App() {
   const { user } = useContext(Context);
@@ -35,11 +36,14 @@ function App() {
           {user ? <Redirect to="/dashboard" /> : <Register />}
         </Route>
         <Route path="/login">
-          {user  && user.user.isAdmin ? <Redirect to="/admin" />} : {user && !user.user.isAdmin && <Redirect to="/dashboard"/> : <Login />}
+          {user ? <Redirect to={ user.user.isAdmin ? "/admin" : "/dashboard"}/> : <Login/> }
         </Route>
-        <Route path="/dashboard">{user ? <Dashboard /> : <Login />}</Route>
+        <Route path="/dashboard">{user && !user.user.isAdmin ? <Dashboard /> : <Login />}</Route>
         <Route path="/admin">
           {user && user.user.isAdmin ? <Admin/> : <Login/>}
+        </Route>
+        <Route path="/edit-user">
+          {user && user.user.isAdmin ? <EditUser/> : <Login/>}
         </Route>
       </Switch>
     </Router>

@@ -1,22 +1,31 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
 import "./dashboard.css";
+import jwt_decode from "jwt-decode";
 
 const Dashboard = () => {
-  const { user, dispatch } = useContext(Context);
-  console.log(user.user.username);
+  const { user, dispatch, accessToken } = useContext(Context);
   const handleLogout = async () => {
     dispatch({ type: "LOGOUT" });
   };
+
+  axios.interceptors.request.use(async (config) => {
+    let currentDate = new Date();
+    const decodedToken = jwt_decode(accessToken.accessToken);
+    console.log(jwt_decode(accessToken.accessToken))
+    if (decodedToken.exp * 1000 < currentDate.getTime) {
+      dispatch({ type: "LOGOUT" });
+    }
+    return config;
+  });
+
   return (
     <div className="dashboard">
       <div className="top">
         <div className="left">
-          <h3>
-            {" "}
-            Welcome back {user.user.username}
-          </h3>
+          <h3> Welcome back {user.user.username}</h3>
         </div>
         <div className="right">
           <div className="icon">{/* <i className="bi bi-people"></i> */}</div>
@@ -60,7 +69,7 @@ const Dashboard = () => {
                 <FontAwesomeIcon icon="fa-solid fa-wallet" />
                 <p>TOTAL WITHDRAWAL</p>
                 <FontAwesomeIcon icon="fa-solid fa-signal" />
-                <h4>$0:00</h4>
+                <h4>${user.user.totalWithdrawal}:00</h4>
               </div>
             </div>
           </div>
@@ -69,7 +78,7 @@ const Dashboard = () => {
             <div className="row">
               <div className="col-md-4 col">
                 <p>DAILY PROFIT</p>
-                <h4>$0:00</h4>
+                <h4>${user.user.dailyProfit}:00</h4>
               </div>
             </div>
           </div>
@@ -78,7 +87,7 @@ const Dashboard = () => {
             <div className="row">
               <div className="col-md-4 col">
                 <p>ACCOUNT BALANCE</p>
-                <h4>$0:00</h4>
+                <h4>${user.user.accountBalance}:00</h4>
               </div>
             </div>
           </div>
@@ -87,7 +96,7 @@ const Dashboard = () => {
             <div className="row">
               <div className="col-md-4 col">
                 <p>INVESTED AMOUNT</p>
-                <h4>$0:00</h4>
+                <h4>${user.user.investedAmount}:00</h4>
               </div>
             </div>
           </div>

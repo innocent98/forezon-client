@@ -2,9 +2,9 @@ export const LoginStart = (userCredentials) => ({
     type: "LOGIN_START",
   });
   
-  export const LoginSuccess = (user) => ({
+  export const LoginSuccess = (user, accessToken) => ({
     type: "LOGIN_SUCCESS",
-    payload: user,
+    payload: user, accessToken,
   });
   
   export const LoginFailure = (error) => ({
