@@ -8,7 +8,6 @@ import "./editUser.scss";
 const EditUser = () => {
   const {dispatch} = useContext(Context);
   const accessToken = useContext(Context);
-  console.log(accessToken.accessToken);
 
   //get single user  function
   const [singleUser, setUser] = useState([]);
@@ -29,7 +28,7 @@ const EditUser = () => {
   const [investedAmount, setInvestedAmount] = useState(singleUser.investedAmount);
   const [dailyProfit, setDailyProfit] = useState(singleUser.dailyProfit);
   const [totalWithdrawal, setTotalWithdrawal] = useState(singleUser.totalWithdrawal);
-  const [sucess, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +44,7 @@ const EditUser = () => {
         totalWithdrawal,
       });
       setSuccess(true);
-      window.location.replace("/admin");
+      success && window.location.replace("/admin");
     } catch (error) {}
   };
 

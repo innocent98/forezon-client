@@ -3,13 +3,14 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./admin.scss";
-import jwt_decode from "jwt-decode";
 import { decode } from "jsonwebtoken";
 
 const Admin = () => {
-  //logout function
   const { user, dispatch } = useContext(Context);
   const accessToken = useContext(Context);
+  // const refreshToken = useContext(Context);
+
+  //logout function
   const handleLogout = async () => {
     dispatch({ type: "LOGOUT" });
   };
@@ -26,7 +27,7 @@ const Admin = () => {
     }
   });
 
-  //fetch all user
+  //fetch all users
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -36,6 +37,8 @@ const Admin = () => {
     };
     fetchUsers();
   }, [setUsers]);
+
+
 
   return (
     <div className="admin">
@@ -89,9 +92,11 @@ const Admin = () => {
                       {u.isAdmin ? "" : "Edit"}
                     </button>
                   </Link>
-                  <button className={u.isAdmin ? "none" : "delete btn-danger"}>
-                    {u.isAdmin ? "" : "Delete"}
-                  </button>
+                  <Link to={`/user/delete/${u._id}`}>
+                    <button className={u.isAdmin ? "none" : "delete btn-danger"}>
+                      {u.isAdmin ? "" : "Delete"}
+                    </button>
+                  </Link>
                 </td>
               </tr>
             ))}

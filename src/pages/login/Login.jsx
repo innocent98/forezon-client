@@ -22,6 +22,7 @@ const Login = () => {
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err });
       setError(true);
+      error && alert("Invalid login credentials, please try again")
     }
   };
 
@@ -46,7 +47,7 @@ const Login = () => {
             />
           </div>
           <div className="col-md-4">
-            <button className="btn btn-primary" type="submit">
+            <button className="btn btn-primary" type="submit" disabled={isFetching}>
               Login
             </button>
           </div>

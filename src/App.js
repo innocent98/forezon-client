@@ -17,6 +17,7 @@ import { useContext } from "react";
 import { Context } from "./context/Context";
 import Admin from "./pages/admin/Admin";
 import EditUser from "./pages/editUser/EditUser";
+import Delete from "./pages/deleteConfirmation/Delete";
 
 function App() {
   const { user } = useContext(Context);
@@ -36,14 +37,23 @@ function App() {
           {user ? <Redirect to="/dashboard" /> : <Register />}
         </Route>
         <Route path="/login">
-          {user ? <Redirect to={ user.user.isAdmin ? "/admin" : "/dashboard"}/> : <Login/> }
+          {user ? (
+            <Redirect to={user.user.isAdmin ? "/admin" : "/dashboard"} />
+          ) : (
+            <Login />
+          )}
         </Route>
-        <Route path="/dashboard">{user && !user.user.isAdmin ? <Dashboard /> : <Login />}</Route>
+        <Route path="/dashboard">
+          {user && !user.user.isAdmin ? <Dashboard /> : <Login />}
+        </Route>
         <Route path="/admin">
-          {user && user.user.isAdmin ? <Admin/> : <Login/>}
+          {user && user.user.isAdmin ? <Admin /> : <Login />}
         </Route>
         <Route path="/edit-user">
-          {user && user.user.isAdmin ? <EditUser/> : <Login/>}
+          {user && user.user.isAdmin ? <EditUser /> : <Login />}
+        </Route>
+        <Route path="/user/delete">
+          {user && user.user.isAdmin ? <Delete /> : <Login />}
         </Route>
       </Switch>
     </Router>

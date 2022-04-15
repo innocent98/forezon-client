@@ -37,6 +37,9 @@
           background-color: #10162c !important;
           width: 100%;
           border: none;
+          &:disabled{
+            cursor: not-allowed;
+          }
         }
       }
     }

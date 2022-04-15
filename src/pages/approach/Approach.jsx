@@ -63,7 +63,7 @@ const Approach = () => {
             alt=""
           />
           <div className="roleImg">
-            <img src="assets/Great Potter.jpeg" alt="" />
+            <img src="assets/Potter.jpeg" alt="" />
           </div>
           <div className="role">
             <p>

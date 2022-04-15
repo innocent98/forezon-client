@@ -1,9 +1,10 @@
-const Reducer = (state, action, accessToken) => {
+const Reducer = (state, action, accessToken, refreshToken) => {
     switch (action.type) {
       case "LOGIN_START":
         return {
           user: null,
           accessToken: null,
+          refreshToken: null,
           isFecting: true,
           error: false,
         };
@@ -11,6 +12,7 @@ const Reducer = (state, action, accessToken) => {
         return {
           user: action.payload,
           accessToken: action.payload.accessToken,
+          refreshToken: action.payload.refreshToken,
           isFetching: false,
           error: false,
         };
@@ -18,6 +20,7 @@ const Reducer = (state, action, accessToken) => {
         return {
           user: null,
           accessToken: null,
+          refreshToken: null,
           isFecting: false,
           error: action.payload,
         };
@@ -42,6 +45,7 @@ const Reducer = (state, action, accessToken) => {
         return {
           user: null,
           accessToken: null,
+          refreshToken: null,
           isFecting: false,
           error: false,
         };

@@ -1,9 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "../../context/Context";
 import "./dashboard.css";
-import jwt_decode from "jwt-decode";
+import { decode } from "jsonwebtoken";
 
 const Dashboard = () => {
   const { user, dispatch, accessToken } = useContext(Context);
@@ -11,14 +10,16 @@ const Dashboard = () => {
     dispatch({ type: "LOGOUT" });
   };
 
-  axios.interceptors.request.use(async (config) => {
-    let currentDate = new Date();
-    const decodedToken = jwt_decode(accessToken.accessToken);
-    console.log(jwt_decode(accessToken.accessToken))
-    if (decodedToken.exp * 1000 < currentDate.getTime) {
-      dispatch({ type: "LOGOUT" });
+  //logout a user automatically when session expired
+  useEffect(() => {
+    const token = accessToken.accessToken;
+    if (token) {
+      const decodedToken = decode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        handleLogout();
+        return alert("Session expired! kindly login again to continue");
+      }
     }
-    return config;
   });
 
   return (
