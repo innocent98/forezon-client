@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./admin.scss";
 import { decode } from "jsonwebtoken";
+import { axiosInstance } from "../../config";
 
 const Admin = () => {
   const { user, dispatch } = useContext(Context);
@@ -32,7 +33,7 @@ const Admin = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await axios.get("/user");
+      const res = await axiosInstance.get("/user");
       setUsers(res.data);
     };
     fetchUsers();

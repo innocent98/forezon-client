@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from "react";
 import "./login.scss";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import { axiosInstance } from "../../config";
 
 const Login = () => {
   const usernameRef = useRef();
@@ -14,7 +15,7 @@ const Login = () => {
     setError(false);
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("/user/login", {
+      const res = await axiosInstance.post("/user/login", {
         username: usernameRef.current.value,
         password: passwordRef.current.value,
       });

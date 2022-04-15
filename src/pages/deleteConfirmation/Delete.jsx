@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import { Context } from "../../context/Context";
 import "./delete.scss";
+import { axiosInstance } from "../../config";
 
 const Delete = () => {
   const { dispatch } = useContext(Context);
@@ -21,7 +22,7 @@ const Delete = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`/user/${path}`);
+      const res = await axiosInstance.get(`/user/${path}`);
       setUser(res.data);
     };
     fetchUser();
@@ -59,7 +60,7 @@ const Delete = () => {
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
-      await axios.delete(`/user/delete/${path}`, {
+      await axiosInstance.delete(`/user/delete/${path}`, {
         data: {
           headers: {
             Authorization: `Bearer ${accessToken.accessToken}`,

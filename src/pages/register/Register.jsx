@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { axiosInstance } from "../../config";
 import "./register.scss";
 
 const Register = () => {
@@ -13,7 +14,7 @@ const Register = () => {
     e.preventDefault();
     setSuccess(false);
     try {
-      const res = await axios.post("/user/register", {
+      const res = await axiosInstance.post("/user/register", {
         email,
         username,
         password,

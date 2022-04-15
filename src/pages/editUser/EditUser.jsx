@@ -2,6 +2,7 @@ import axios from "axios";
 import { decode } from "jsonwebtoken";
 import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import { axiosInstance } from "../../config";
 import { Context } from "../../context/Context";
 import "./editUser.scss";
 
@@ -17,7 +18,7 @@ const EditUser = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`/user/${path}`);
+      const res = await axiosInstance.get(`/user/${path}`);
       setUser(res.data);
     };
     fetchUser();
@@ -33,7 +34,7 @@ const EditUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/user/edit-user/${path}`, {
+      await axiosInstance.put(`/user/edit-user/${path}`, {
         headers: {
           Authorization: `Bearer ${accessToken.accessToken}`,
         },
