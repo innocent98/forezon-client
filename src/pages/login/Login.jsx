@@ -8,7 +8,7 @@ const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const { dispatch, isFetching } = useContext(Context);
-  const [error, setError] = useState("");
+  const [setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,8 +22,8 @@ const Login = () => {
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err });
-      setError(true);
-      error && alert("Invalid login credentials, please try again")
+      setError(err);
+      alert("Invalid login credentials, please try again");
     }
   };
 
@@ -36,6 +36,7 @@ const Login = () => {
               type="username"
               placeholder="Username"
               className="form-control shadow-none"
+              name="username"
               ref={usernameRef}
             />
           </div>
@@ -44,11 +45,16 @@ const Login = () => {
               type="password"
               placeholder="Password"
               className="form-control shadow-none"
+              name="password"
               ref={passwordRef}
             />
           </div>
           <div className="col-md-4">
-            <button className="btn btn-primary" type="submit" disabled={isFetching}>
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={isFetching}
+            >
               Login
             </button>
           </div>
