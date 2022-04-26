@@ -1,4 +1,14 @@
 .admin {
+  .row {
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    position: absolute;
+    left: 20px;
+    top: -25px;
+    margin: 20px;
+  }
+  
   .logout {
     background-color: teal;
     color: white;

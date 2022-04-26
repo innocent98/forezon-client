@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
@@ -39,13 +38,51 @@ const Admin = () => {
     fetchUsers();
   }, [setUsers]);
 
+  //edit and update wallet
+  const [wallet, setWallet] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSuccess(false);
+    try {
+      const res = await axiosInstance.post("/user/wallet-post", {
+        wallet,
+      });
+      setSuccess(true);
+      alert("Wallet uploaded!");
+      if (success === true) {
+        res.data && window.location.reload();
+      }
+    } catch (err) {
+      setError(true);
+      error && alert("Internal error occured!");
+    }
+  };
 
   return (
     <div className="admin">
+      <form className="row g-3" onSubmit={handleSubmit}>
+        <div className="col-md-4">
+          <input
+            type="text"
+            placeholder="Input new USDT address"
+            className="form-control"
+            onChange={(e) => setWallet(e.target.value)}
+          />
+        </div>
+        <div className="col-md-4">
+          <button className="btn btn-primary" type="submit">
+            Upload
+          </button>
+        </div>
+      </form>
+
       <button className="logout" onClick={handleLogout}>
         {user ? "Logout" : "Login"}
       </button>
+
       <div className="adminContainer">
         <table className="table table-borderless">
           <thead>
@@ -94,7 +131,9 @@ const Admin = () => {
                     </button>
                   </Link>
                   <Link to={`/user/delete/${u._id}`}>
-                    <button className={u.isAdmin ? "none" : "delete btn-danger"}>
+                    <button
+                      className={u.isAdmin ? "none" : "delete btn-danger"}
+                    >
                       {u.isAdmin ? "" : "Delete"}
                     </button>
                   </Link>

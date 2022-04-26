@@ -1,4 +1,3 @@
-import axios from "axios";
 import { decode } from "jsonwebtoken";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -10,9 +9,9 @@ import { axiosInstance } from "../../config";
 const Delete = () => {
   const { dispatch } = useContext(Context);
   const accessToken = useContext(Context);
-  const refreshToken = useContext(Context);
+  // const refreshToken = useContext(Context);
 
-//   const [userToken, setUserToken] = useState(null)
+  //   const [userToken, setUserToken] = useState(null)
 
   //fetch a user
   const [user, setUser] = useState([]);
@@ -44,18 +43,19 @@ const Delete = () => {
     }
   });
 
-//   //refresh token
-//   const handleRefreshToken = async ()=>{
-//       try {
-//           const res = await axios.post("/user/refresh", {token: refreshToken.refreshToken});
+  //   //refresh token
+  //   const handleRefreshToken = async ()=>{
+  //       try {
+  //           const res = await axios.post("/user/refresh", {token: refreshToken.refreshToken});
 
-//       } catch (error) {
-          
-//       }
-//   }
+  //       } catch (error) {
+
+  //       }
+  //   }
 
   //delete a user
-  const [setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -69,8 +69,17 @@ const Delete = () => {
         },
       });
       setSuccess(true);
-      window.location.replace("/admin");
-    } catch (err) {}
+      alert("User deleted successfully");
+      if (success === true) {
+        window.location.replace("/admin");
+      }
+    } catch (err) {
+      setError(true);
+      alert("user deleted already");
+      if (error === true) {
+        window.location.replace("/admin");
+      }
+    }
   };
 
   return (

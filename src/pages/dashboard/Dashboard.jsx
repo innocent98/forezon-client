@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import "./dashboard.css";
 import { decode } from "jsonwebtoken";
+import Deposit from "../deposit/Deposit";
+import Withdraw from "../withdraw/Withdraw";
 
 const Dashboard = () => {
   const { user, dispatch, accessToken } = useContext(Context);
@@ -21,6 +23,10 @@ const Dashboard = () => {
       }
     }
   });
+
+  //handle deposit and withdrawal
+  const [deposit, setDeposit] = useState(false);
+  const [withdraw, setWithdraw] = useState(false);
 
   return (
     <div className="dashboard">
@@ -46,13 +52,13 @@ const Dashboard = () => {
               <div className="icon">
                 <i className="bi bi-cash-stack"></i>
               </div>
-              <h5>Deposit</h5>
+              <h5 onClick={() => setDeposit(!deposit)}>Deposit</h5>
             </li>
             <li className="li">
               <div className="icon">
                 <i className="bi bi-collection"></i>
               </div>
-              <h5>Withdraw</h5>
+              <h5 onClick={() => setWithdraw(!withdraw)}>Withdraw</h5>
             </li>
             <li className="li">
               <div className="icon">
@@ -78,7 +84,7 @@ const Dashboard = () => {
           <div className="container">
             <div className="row">
               <div className="col-md-4 col">
-                <p>DAILY PROFIT</p>
+                <p>OUTSTANDING</p>
                 <h4>${user.user.dailyProfit}:00</h4>
               </div>
             </div>
@@ -102,6 +108,13 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className={deposit ? "deposit" : "none"}>
+        <Deposit deposit={deposit} setDeposit={setDeposit} />
+      </div>
+      <div className={withdraw ? "withdraw" : "none"}>
+        <Withdraw withdraw={withdraw} setWithdraw={setWithdraw} />
       </div>
     </div>
   );

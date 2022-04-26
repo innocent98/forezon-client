@@ -70,7 +70,7 @@ const Approach = () => {
               "Role building, implementation and collaboration influence the
               group, while philosophies dramatically result in a calibration."
             </p>
-            <h6>John Doe - Founder of Startup Company</h6>
+            <h6>John Desmond - CEO</h6>
             <h2>Startup</h2>
           </div>
         </div>

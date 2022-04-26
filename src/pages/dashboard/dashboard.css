@@ -192,3 +192,29 @@ h4 {
     padding-left: 10px;
   }
 }
+
+.deposit{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 0;
+  left: 0;
+  top: 0; 
+  bottom: 0;
+}
+
+.withdraw{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 0;
+  left: 0;
+  top: 0; 
+  bottom: 0;
+}
+
+.none{
+  display: none;
+}
