@@ -19,7 +19,7 @@ const Deposit = ({ deposit, setDeposit }) => {
   return (
     <div className="depositWallet">
       <h3>
-        Deposit USDT into the wallet address. <br /> NB: Use trc20 as your
+        Deposit BTC into the wallet address. <br /> NB: Use trc20 as your
         network
       </h3>
       {wallet.map((w) => (

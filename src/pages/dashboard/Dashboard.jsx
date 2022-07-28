@@ -33,10 +33,7 @@ const Dashboard = () => {
       <div className="top">
         <div className="left">
           <h3> Welcome back {user.user.username}</h3>
-        </div>
-        <div className="right">
-          <div className="icon">{/* <i className="bi bi-people"></i> */}</div>
-          {/* <div className="referral">Referral Commission: $0:00</div> */}
+        <marquee behavior="" direction="left">Note: Damian Lyons Balancing of 1,000 needs to be done for maintenance</marquee>
         </div>
       </div>
       <div className="body">

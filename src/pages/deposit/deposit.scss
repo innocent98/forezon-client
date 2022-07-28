@@ -1,3 +1,5 @@
+@import "../global.scss";
+
 .depositWallet {
   background-color: white;
   padding: 20px;
@@ -9,12 +11,16 @@
   justify-content: center;
   height: auto;
   position: relative;
+  @include mobile{
+    width: 80%;
+  }
 
   input{
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
+      width: 90%;
   }
 
   .material-icons {
@@ -23,5 +29,14 @@
     top: 0;
     margin: 10px;
     cursor: pointer;
+  }
+
+  button{
+    border: none;
+    background-color: goldenrod;
+    padding: 5px 15px;
+    margin-top: 5px;
+    border-radius: 4px;
+    color: white;
   }
 }

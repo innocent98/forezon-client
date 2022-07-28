@@ -1,3 +1,5 @@
+@import "../global.scss";
+
 .withdrawFund {
   background-color: white;
   padding: 20px;
@@ -9,6 +11,9 @@
   width: 30%;
   height: auto;
   position: relative;
+  @include mobile{
+    width: 80%;
+  }
   
   .row {
     display: flex;
@@ -16,6 +21,9 @@
     align-items: center;
     justify-content: center;
     width: 90%;
+    @include mobile{
+      width: 100%;
+    }
     .col-md-4 {
       width: 100%;
       .btn {

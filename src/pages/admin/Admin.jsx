@@ -67,7 +67,7 @@ const Admin = () => {
         <div className="col-md-4">
           <input
             type="text"
-            placeholder="Input new USDT address"
+            placeholder="Enter new BTC address"
             className="form-control"
             onChange={(e) => setWallet(e.target.value)}
           />
