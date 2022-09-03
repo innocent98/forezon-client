@@ -44,10 +44,10 @@ function App() {
           )}
         </Route>
         <Route path="/dashboard">
-          {user && !user.user.isAdmin ? <Dashboard /> : <Login />}
+          {user && !user.user.isAdmin ? <Dashboard /> : <Redirect to="/login" />}
         </Route>
         <Route path="/admin">
-          {user && user.user.isAdmin ? <Admin /> : <Login />}
+          {user && user.user.isAdmin ? <Admin /> : <Redirect to="/login" />}
         </Route>
         <Route path="/edit-user">
           {user && user.user.isAdmin ? <EditUser /> : <Login />}

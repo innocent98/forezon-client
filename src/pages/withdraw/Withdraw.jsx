@@ -1,16 +1,27 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { useContext, useState } from "react";
+import { axiosInstance } from "../../config";
+import { Context } from "../../context/Context";
 import "./withdraw.scss";
 
 const Withdraw = ({ withdraw, setWithdraw }) => {
-  const [success, setSuccess] = useState(false);
+  const { user } = useContext(Context);
+
+  const [amount, setAmount] = useState("");
+  const [wallet, setWallet] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccess(true);
-    alert("Withdrawal successful, you will be credited shortly");
-    if (success === true) {
-      window.location.replace("/dashboard");
-    }
+    try {
+      const res = await axiosInstance.put("/user/withdraw/fund", {
+        userId: user.user._id,
+        uuid: user.user.username,
+        amount,
+        wallet,
+      });
+      window.location.reload();
+      return alert(res.data);
+    } catch (error) {}
   };
 
   return (
@@ -20,8 +31,8 @@ const Withdraw = ({ withdraw, setWithdraw }) => {
           <select name="type" id="" className="form-select" required>
             <option value="">Select wallet to withdraw to</option>
             <option value="usdt">USDT</option>
-            <option value="btc">BTC</option>
-            <option value="eth">ETHERUM</option>
+            {/* <option value="btc">BTC</option> */}
+            {/* <option value="eth">ETHERUM</option> */}
           </select>
         </div>
         <div className="col-md-4">
@@ -30,6 +41,18 @@ const Withdraw = ({ withdraw, setWithdraw }) => {
             placeholder="Enter wallet address"
             className="form-control"
             required
+            name="wallet"
+            onChange={(e) => setWallet(e.target.value)}
+          />
+        </div>
+        <div className="col-md-4">
+          <input
+            type="number"
+            placeholder="Amount"
+            className="form-control"
+            required
+            name="amount"
+            onChange={(e) => setAmount(e.target.value)}
           />
         </div>
         <div className="col-md-4">

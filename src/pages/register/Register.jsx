@@ -6,6 +6,7 @@ import "./register.scss";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [referral, setReferral] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -18,6 +19,7 @@ const Register = () => {
         email,
         username,
         password,
+        referral,
       });
       setSuccess(true);
       alert("Registration successful! proceed to login");
@@ -52,6 +54,15 @@ const Register = () => {
               className="form-control shadow-none"
               required
               onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="col-md-4">
+            <input
+              type="text"
+              placeholder="Referral username if available"
+              name="referral"
+              className="form-control shadow-none"
+              onChange={(e) => setReferral(e.target.value)}
             />
           </div>
           <div className="col-md-4">

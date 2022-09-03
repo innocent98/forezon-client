@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./deposit.scss";
 import { axiosInstance } from "../../config";
+import { Context } from "../../context/Context";
 
 const Deposit = ({ deposit, setDeposit }) => {
+  const accessToken = useContext(Context);
+
   const [copy, setCopy] = useState(false);
 
   //fetch wallet
@@ -16,10 +19,29 @@ const Deposit = ({ deposit, setDeposit }) => {
     fetchWallet();
   }, [setWallet]);
 
+  // sent
+  const [amount, setAmount] = useState(0);
+  const handleSent = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axiosInstance.post("/user/sent", {
+        headers: {
+          Authorization: `Bearer ${accessToken.accessToken}`,
+        },
+        accessToken: accessToken.accessToken,
+        amount,
+      });
+      window.location.reload();
+      return alert(res.data);
+    } catch (error) {
+      return alert("Connection error!");
+    }
+  };
+
   return (
     <div className="depositWallet">
       <h3>
-        Deposit BTC into the wallet address. <br /> NB: Use trc20 as your
+        Deposit USDT into the wallet address below. <br /> NB: Use trc20 as your
         network
       </h3>
       {wallet.map((w) => (
@@ -27,6 +49,7 @@ const Deposit = ({ deposit, setDeposit }) => {
           <input
             type="text"
             name="address"
+            className="form-control shadow-none"
             id=""
             value={w.wallet}
             readOnly
@@ -43,6 +66,22 @@ const Deposit = ({ deposit, setDeposit }) => {
           </button>
         </>
       ))}
+      <form className="row" onSubmit={handleSent}>
+        <div className="col-md-3">
+          <input
+            type="number"
+            name="amount"
+            className="form-control shadow-none"
+            placeholder="Enter USDT amount deposited"
+            required
+            min={10}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </div>
+        <div className="col-md-3">
+          <button type="submit">I have sent it</button>
+        </div>
+      </form>
     </div>
   );
 };
