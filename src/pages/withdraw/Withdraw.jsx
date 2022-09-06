@@ -9,9 +9,11 @@ const Withdraw = ({ withdraw, setWithdraw }) => {
 
   const [amount, setAmount] = useState("");
   const [wallet, setWallet] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axiosInstance.put("/user/withdraw/fund", {
         userId: user.user._id,
@@ -19,9 +21,13 @@ const Withdraw = ({ withdraw, setWithdraw }) => {
         amount,
         wallet,
       });
+      setLoading(false);
       window.location.reload();
       return alert(res.data);
-    } catch (error) {}
+    } catch (error) {
+      setLoading(false);
+      return alert(error.response.data);
+    }
   };
 
   return (
@@ -56,11 +62,13 @@ const Withdraw = ({ withdraw, setWithdraw }) => {
           />
         </div>
         <div className="col-md-4">
-          <button className="btn btn-primary">Withdraw</button>
+          <button className="btn btn-primary">
+            {loading ? "Please wait..." : "Withdraw"}
+          </button>
         </div>
       </form>
 
-      <span class="material-icons" onClick={() => setWithdraw(!withdraw)}>
+      <span className="material-icons" onClick={() => setWithdraw(!withdraw)}>
         close
       </span>
     </div>

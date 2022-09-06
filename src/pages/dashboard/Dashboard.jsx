@@ -36,10 +36,10 @@ const Dashboard = () => {
 
   const percentage = async (e) => {
     try {
-     const res = await axiosInstance.put("/user/percent/update", {
+      await axiosInstance.put("/user/percent/update", {
         userId: user.user._id,
       });
-      res.data && window.location.reload();
+      window.location.reload();
     } catch (error) {}
   };
 
@@ -49,17 +49,17 @@ const Dashboard = () => {
   const totalSeconds = (currentTime - countdownTimestampMs) / 1000;
   // console.log(totalSeconds);
 
-  // // automate percent
-  // useEffect(() => {
-  //   if (lU.time != null) {
-  //     const handleMining = async (e) => {
-  //       if (totalSeconds >= 0) {
-  //         await percentage();
-  //       }
-  //     };
-  //     handleMining();
-  //   }
-  // });
+  // automate percent
+  useEffect(() => {
+    if (lU.time != null) {
+      const handleMining = async (e) => {
+        if (totalSeconds >= 0) {
+          await percentage();
+        }
+      };
+      handleMining();
+    }
+  });
 
   // console.log(lU.time);
 
@@ -126,25 +126,15 @@ const Dashboard = () => {
               <div className="icon">
                 <i className="bi bi-collection"></i>
               </div>
-              <h5 onClick={() => setWithdraw(totalSeconds >= 0 && !withdraw)}>
-                {totalSeconds >= 0
-                  ? "Withdraw"
-                  : `${remainingTime.hours}h : ${remainingTime.minutes}m`}
+              <h5 onClick={() => setWithdraw(!withdraw)}>
+                Withdraw
               </h5>
             </li>
-            {lU.time != null ? (
-              <button onClick={percentage}>
-                <li className="li">
-                  <h5>
-                    {totalSeconds >= 0
-                      ? "Claim Earning"
-                      : `${remainingTime.hours}h : ${remainingTime.minutes}m`}
-                  </h5>
-                </li>
-              </button>
-            ) : (
-              ""
-            )}
+            <li className="li">
+              <h5>
+                {`${remainingTime.hours}h : ${remainingTime.minutes}m : ${remainingTime.seconds}s`}
+              </h5>
+            </li>
             <li className="li">
               <div className="icon">
                 <i className="bi bi-box-arrow-left"></i>

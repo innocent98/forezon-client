@@ -7,6 +7,7 @@ const Deposit = ({ deposit, setDeposit }) => {
   const accessToken = useContext(Context);
 
   const [copy, setCopy] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   //fetch wallet
   const [wallet, setWallet] = useState([]);
@@ -23,6 +24,7 @@ const Deposit = ({ deposit, setDeposit }) => {
   const [amount, setAmount] = useState(0);
   const handleSent = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axiosInstance.post("/user/sent", {
         headers: {
@@ -31,10 +33,12 @@ const Deposit = ({ deposit, setDeposit }) => {
         accessToken: accessToken.accessToken,
         amount,
       });
+      setLoading(false);
       window.location.reload();
       return alert(res.data);
     } catch (error) {
-      return alert("Connection error!");
+      setLoading(false);
+      return alert(error.response.data)
     }
   };
 
@@ -45,7 +49,7 @@ const Deposit = ({ deposit, setDeposit }) => {
         network
       </h3>
       {wallet.map((w) => (
-        <>
+        <div key={w._id}>
           <input
             type="text"
             name="address"
@@ -54,7 +58,7 @@ const Deposit = ({ deposit, setDeposit }) => {
             value={w.wallet}
             readOnly
           />
-          <span class="material-icons" onClick={() => setDeposit(!deposit)}>
+          <span className="material-icons" onClick={() => setDeposit(!deposit)}>
             close
           </span>
           <button
@@ -64,7 +68,7 @@ const Deposit = ({ deposit, setDeposit }) => {
           >
             {copy ? "Copied" : "Copy"}
           </button>
-        </>
+        </div>
       ))}
       <form className="row" onSubmit={handleSent}>
         <div className="col-md-3">
@@ -79,7 +83,7 @@ const Deposit = ({ deposit, setDeposit }) => {
           />
         </div>
         <div className="col-md-3">
-          <button type="submit">I have sent it</button>
+          <button type="submit"> {loading ? "Please wait..." : "I have sent it"}</button>
         </div>
       </form>
     </div>

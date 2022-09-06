@@ -18,6 +18,7 @@ import { Context } from "./context/Context";
 import Admin from "./pages/admin/Admin";
 import EditUser from "./pages/editUser/EditUser";
 import Delete from "./pages/deleteConfirmation/Delete";
+import Bootcamp from "./pages/Bootcamp";
 
 function App() {
   const { user } = useContext(Context);
@@ -44,7 +45,11 @@ function App() {
           )}
         </Route>
         <Route path="/dashboard">
-          {user && !user.user.isAdmin ? <Dashboard /> : <Redirect to="/login" />}
+          {user && !user.user.isAdmin ? (
+            <Dashboard />
+          ) : (
+            <Redirect to="/login" />
+          )}
         </Route>
         <Route path="/admin">
           {user && user.user.isAdmin ? <Admin /> : <Redirect to="/login" />}
@@ -55,6 +60,7 @@ function App() {
         <Route path="/user/delete">
           {user && user.user.isAdmin ? <Delete /> : <Login />}
         </Route>
+        <Route path="/bootcamp">{<Bootcamp />}</Route>
       </Switch>
     </Router>
   );

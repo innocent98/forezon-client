@@ -71,7 +71,7 @@ const Approach = () => {
               group, while philosophies dramatically result in a calibration."
             </p>
             <h6>John Desmond - CEO</h6>
-            <h2>Startup</h2>
+            {/* <h2>Startup</h2> */}
           </div>
         </div>
       </div>

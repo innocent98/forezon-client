@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { axiosInstance } from "../../config";
 import "./register.scss";
@@ -8,27 +7,24 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [referral, setReferral] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccess(false);
+    setLoading(true);
     try {
-      const res = await axiosInstance.post("/user/register", {
+      await axiosInstance.post("/user/register", {
         email,
         username,
         password,
         referral,
       });
-      setSuccess(true);
-      alert("Registration successful! proceed to login");
-      if (success === true) {
-        res.data && window.location.replace("/login");
-      }
+      setLoading(false);
+      window.location.replace("/login");
+      return alert("Registration successful! proceed to login");
     } catch (err) {
-      setError(true);
-      error && alert("Email or Username exist! Please try another");
+      setLoading(false);
+      return alert(err.response.data.message);
     }
   };
   return (
@@ -77,7 +73,7 @@ const Register = () => {
           </div>
           <div className="col-md-4">
             <button className="btn btn-primary" type="submit">
-              Register
+              {loading ? "Please wait..." : "Register"}
             </button>
           </div>
         </form>

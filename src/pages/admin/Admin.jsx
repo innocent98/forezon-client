@@ -97,7 +97,7 @@ const Admin = () => {
                 Invested Amount
               </th>
               <th scope="col" className="text-center">
-                Daily Profit
+                Total Profit
               </th>
               <th scope="col" className="text-center">
                 Total Withdrawal

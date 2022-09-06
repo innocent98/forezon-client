@@ -1,6 +1,5 @@
 import { useContext, useRef, useState } from "react";
 import "./login.scss";
-import axios from "axios";
 import { Context } from "../../context/Context";
 import { axiosInstance } from "../../config";
 
@@ -8,22 +7,23 @@ const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const { dispatch, isFetching } = useContext(Context);
-  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(false);
+    setLoading(true);
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axiosInstance.post("/user/login", {
         username: usernameRef.current.value,
         password: passwordRef.current.value,
       });
+      setLoading(false);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err });
-      setError(true);
-      error && alert("Invalid login credentials, please try again")
+      setLoading(false);
+      return alert(err.response.data.message);
     }
   };
 
@@ -50,8 +50,12 @@ const Login = () => {
             />
           </div>
           <div className="col-md-4">
-            <button className="btn btn-primary" type="submit" disabled={isFetching}>
-              Login
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={isFetching}
+            >
+              {loading ? "Please wait.." : "Login"}
             </button>
           </div>
         </form>
